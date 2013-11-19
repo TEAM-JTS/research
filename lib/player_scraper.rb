@@ -22,6 +22,15 @@ class PlayerScraper
     @most_recent_4 = {date: @last_game_stats[4][0], vs: @last_game_stats[4][1], score: @last_game_stats[4][2], minutes: @last_game_stats[4][3], fgam: @last_game_stats[4][4], threepointam: @last_game_stats[4][6], ftam: @last_game_stats[4][8], rb: @last_game_stats[4][10], ast: @last_game_stats[4][11], blk: @last_game_stats[4][12], stl: @last_game_stats[4][13], to: @last_game_stats[4][15], pts: @last_game_stats[4][16]}
   end
 
+  def get_season_averages
+    @season_averages_array = @player_data.css('.oddrow').map{|row| row.css('td').map(&:text)}[2]
+    @season_averages_hash = {gp: @season_averages_array[1], mpg: @season_averages_array[2], fgp: @season_averages_array[4], threepointp: @season_averages_array[6], ftp: @season_averages_array[8], rb: @season_averages_array[9], ast: @season_averages_array[10], blk: @season_averages_array[11], stl: @season_averages_array[12], to: @season_averages_array[14], pts: @season_averages_array[15]}
+  end
+
+  def get_next_game_info
+    @game_time_day = @player_data.css('.time').text.scan(/(\w+)(\d+:\d+\D+)/).flatten
+  end
+
 
 
   # 'div[id^="para-"]')
