@@ -1,5 +1,5 @@
 class PlayerScraper
-  attr_accessor :player_data, :name, :most_recent_0
+  attr_reader :player_data, :name, :picture, :most_recent_0, :most_recent_1,:most_recent_2,:most_recent_3,:most_recent_4, :season_averages_hash, :game_day, :game_time
 
   def initialize(url)
     @player_data = Nokogiri::HTML(open(url))
@@ -29,6 +29,8 @@ class PlayerScraper
 
   def get_next_game_info
     @game_time_day = @player_data.css('.time').text.scan(/(\w+)(\d+:\d+\D+)/).flatten
+    @game_time = @game_time_day[0]
+    @game_day = @game_time_day[1]
   end
 
 
